@@ -1,0 +1,19 @@
+#!/bin/bash
+read -p "Please Enter The Username:" USERNAME
+read -s -p "Please Enter The Password:" PASSWORD
+useradd $USERNAME
+echo $PASSWORD  | passwd --stdin ${USERNAME}
+usermod -aG wheel $USERNAME
+passwd -e $USERNAME
+
+User1.sh
+
+#!/bin/bash
+set -xe
+read -p "Enter the Username:" USER_NAME
+SPEC='!@#$%^&*()_'
+SPECCHAR=$(echo ${SPEC} | fold -w1 | shuf | head -1)
+PASSWORD=${RANDOM}$(date +%s%N)${SPECCHAR}
+useradd -m ${USER_NAME}
+echo ${PASSWORD} | passwd --stdin ${USER_NAME}
+echo "Sucessfully Created user ${USER_NAME} with password as ${PASSWORD}"
